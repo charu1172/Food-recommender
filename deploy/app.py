@@ -17,11 +17,12 @@ st.subheader("Whats your preference?")
 vegn = st.radio("Vegetables or none!",["veg","non-veg"],index = 1) 
 
 st.subheader("What Cuisine do you prefer?")
-cuisine = st.selectbox("Choose your favourite!",['Healthy Food', 'Snack', 'Dessert', 'Japanese', 'Indian', 'French',
-       'Mexican', 'Italian', 'Chinese', 'Beverage', 'Thai'])
+cuisine = st.selectbox("Choose your favourite!",['Healthy Food', 'Snack', 'Dessert', 
+                                        'Japanese', 'Indian', 'French',
+                                       'Mexican', 'Italian', 'Chinese', 'Beverage', 'Thai'])
 
-
-st.subheader("How well do you want the dish to be?")  #RATING
+#RATING
+st.subheader("How well do you want the dish to be?")  
 val = st.slider("from poor to the best!",0,10)
 
 food = pd.read_csv("input/food.csv")
@@ -29,7 +30,9 @@ ratings = pd.read_csv("input/ratings.csv")
 combined = pd.merge(ratings, food, on='Food_ID')
 #ans = food.loc[(food.C_Type == cuisine) & (food.Veg_Non == vegn),['Name','C_Type','Veg_Non']]
 
-ans = combined.loc[(combined.C_Type == cuisine) & (combined.Veg_Non == vegn)& (combined.Rating >= val),['Name','C_Type','Veg_Non']]
+ans = combined.loc[(combined.C_Type == cuisine) & (combined.Veg_Non == vegn)&
+                   (combined.Rating >= val),['Name','C_Type','Veg_Non']]
+
 names = ans['Name'].tolist()
 x = np.array(names)
 ans1 = np.unique(x)
@@ -56,7 +59,8 @@ def food_recommendation(Food_Name):
         Foodi= FoodList.iloc[0]['Food_ID']
         Foodi = dataset[dataset['Food_ID'] == Foodi].index[0]
         distances , indices = model.kneighbors(csr_dataset[Foodi],n_neighbors=n+1)    
-        Food_indices = sorted(list(zip(indices.squeeze().tolist(),distances.squeeze().tolist())),key=lambda x: x[1])[:0:-1]
+        Food_indices = sorted(list(zip(indices.squeeze().tolist(),
+                                       distances.squeeze().tolist())),key=lambda x: x[1])[:0:-1]
         Recommendations = []
         for val in Food_indices:
             Foodi = dataset.iloc[val[0]]['Food_ID']
