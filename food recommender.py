@@ -3,9 +3,6 @@
 
 # ### Imports
 
-# In[ ]:
-
-
 import pandas as pd
 import numpy as np
 from scipy.sparse import csr_matrix
@@ -13,30 +10,16 @@ from sklearn.neighbors import NearestNeighbors
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
-# In[ ]:
-
-
 food = pd.read_csv("food.csv")
 ratings = pd.read_csv("ratings.csv")
 
 
 # ### Preprocessing
 
-# In[ ]:
-
 
 dataset = ratings.pivot_table(index='Food_ID',columns='User_ID',values='Rating')
 
-
-# In[ ]:
-
-
 dataset.fillna(0,inplace=True)
-
-
-# In[ ]:
-
 
 csr_dataset = csr_matrix(dataset.values)
 dataset.reset_index(inplace=True)
@@ -45,17 +28,11 @@ print(dataset)
 
 # ### Model
 
-# In[ ]:
-
-
 model = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=20, n_jobs=-1)
 model.fit(csr_dataset)
 
 
 # ### cbfunction
-
-# In[ ]:
-
 
 def food_recommendation(Food_Name):
     n = 10
@@ -79,15 +56,12 @@ def food_recommendation(Food_Name):
         return df['Name']
     else:
         return "No Similar Foods."
-
-
-# In[ ]:
-
+    
 
 food_recommendation('summer squash salad')
 
 
-# In[ ]:
+
 
 
 
