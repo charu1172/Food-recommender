@@ -11,8 +11,7 @@ st.title("Food Recommendation System")
 st.text("Let us help you with ordering")
 # st.image("foood.jpg")
 
-## nav = st.sidebar.radio("Navigation",["Home","IF Necessary 1",
-"If Necessary 2"])
+## nav = st.sidebar.radio("Navigation",["Home","IF Necessary 1","If Necessary 2"])
 
 st.subheader("Whats your preference?")
 vegn = st.radio("Vegetables or none!",["veg","non-veg"],index = 1) 
@@ -47,8 +46,7 @@ if bruh == True:
 
 
 ##### IMPLEMENTING RECOMMENDER ######
-dataset = ratings.pivot_table(index='Food_ID',
-               columns='User_ID',values='Rating')
+dataset = ratings.pivot_table(index='Food_ID',columns='User_ID',values='Rating')
 dataset.fillna(0,inplace=True)
 csr_dataset = csr_matrix(dataset.values)
 dataset.reset_index(inplace=True)
